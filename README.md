@@ -95,7 +95,6 @@ Sistem ini mendukung 4 jenis pengguna:
 | id          | BIGINT (PK)  | Primary Key                        |
 | user_id     | BIGINT (FK)  | Relasi ke `users.id`               |
 | nis         | VARCHAR      | Nomor Induk Siswa                  |
-| orangtua_id | BIGINT (FK)| Relasi ke `orangtua.id`              |
 
 ---
 
