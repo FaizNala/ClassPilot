@@ -62,12 +62,12 @@ Sistem ini mendukung 4 jenis pengguna:
 ## 🗃️ Struktur Tabel dan Relasi
 
 ### 📄 Tabel: `users`
-| Kolom     | Tipe Data    | Keterangan                |
-|-----------|--------------|---------------------------|
-| id        | BIGINT (PK)  | Primary Key               |
-| name      | VARCHAR      | Nama lengkap user         |
-| email     | VARCHAR      | Email unik                |
-| password  | VARCHAR      | Hash password             |
+| Kolom     | Tipe Data    | Keterangan                   |
+|-----------|--------------|------------------------------|
+| id        | BIGINT (PK)  | Primary Key                  |
+| name      | VARCHAR      | Nama lengkap user            |
+| email     | VARCHAR      | Email unik                   |
+| password  | VARCHAR      | Hash password                |
 | role      | ENUM         | admin, guru, siswa, orangtua |
 
 ---
@@ -90,12 +90,12 @@ Sistem ini mendukung 4 jenis pengguna:
 ---
 
 ### 📄 Tabel: `siswa`
-| Kolom     | Tipe Data    | Keterangan                         |
-|-----------|--------------|------------------------------------|
-| id        | BIGINT (PK)  | Primary Key                        |
-| user_id   | BIGINT (FK)  | Relasi ke `users.id`               |
-| nis       | VARCHAR      | Nomor Induk Siswa                  |
-| orangtua_id | BIGINT (FK)| Relasi ke `orangtua.id`            |
+| Kolom       | Tipe Data    | Keterangan                         |
+|-------------|--------------|------------------------------------|
+| id          | BIGINT (PK)  | Primary Key                        |
+| user_id     | BIGINT (FK)  | Relasi ke `users.id`               |
+| nis         | VARCHAR      | Nomor Induk Siswa                  |
+| orangtua_id | BIGINT (FK)| Relasi ke `orangtua.id`              |
 
 ---
 
@@ -104,31 +104,38 @@ Sistem ini mendukung 4 jenis pengguna:
 |-----------|--------------|------------------------------------|
 | id        | BIGINT (PK)  | Primary Key                        |
 | user_id   | BIGINT (FK)  | Relasi ke `users.id`               |
+| siswa_id  | BIGINT (FK)  | Relasi ke `siswa.id`               |
 | no_hp     | VARCHAR      | Nomor HP                           |
 
 ---
 
 ### 📄 Tabel: `kelas`
-| Kolom     | Tipe Data    | Keterangan                         |
-|-----------|--------------|------------------------------------|
-| id        | BIGINT (PK)  | Primary Key                        |
-| nama_kelas| VARCHAR      | Nama kelas                         |
+| Kolom         | Tipe Data    | Keterangan                         |
+|---------------|--------------|------------------------------------|
+| id            | BIGINT (PK)  | Primary Key                        |
+| wali_kelas_id | BIGINT (FK)  | Relasi ke `guru.id`                |
+| nama_kelas    | VARCHAR      | Nama kelas                         |
 
 ---
 
-### 📄 Tabel: `tahun_ajaran`
+### 📄 Tabel: `tahun_pelajaran`
 | Kolom     | Tipe Data    | Keterangan                         |
 |-----------|--------------|------------------------------------|
 | id        | BIGINT (PK)  | Primary Key                        |
 | tahun     | VARCHAR      | Contoh: 2023/2024                  |
+| aktif     | BOOLEAN      | Status tahun ajaran aktif          |
 
 ---
 
 ### 📄 Tabel: `semester`
-| Kolom         | Tipe Data    | Keterangan                      |
-|---------------|--------------|---------------------------------|
-| id            | BIGINT (PK)  | Primary Key                     |
-| nama_semester | VARCHAR      | Contoh: Ganjil / Genap          |
+| Kolom           | Tipe Data    | Keterangan                      |
+|-----------------|--------------|---------------------------------|
+| id              | BIGINT (PK)  | Primary Key                     |
+| tahun_ajaran_id | BIGINT (FK)  | Relasi ke `tahun_ajaran.id`     |
+| nama_semester   | ENUM         | Ganjil, Genap                   |
+| tanggal_mulai   | DATE         | tanggal semeter dimulai         |
+| tanggal_selesai | DATE         | tanggal semester selesai        |
+| aktif           | BOOLEAN      | status semester aktif           |
 
 ---
 
@@ -181,9 +188,10 @@ Sistem ini mendukung 4 jenis pengguna:
 | guru_id         | BIGINT (FK)  | Relasi ke `guru.id`                    |
 | tahun_ajaran_id | BIGINT (FK)  | Relasi ke `tahun_ajaran.id`            |
 | semester_id     | BIGINT (FK)  | Relasi ke `semester.id`                |
-| tugas           | INTEGER      | Nilai tugas                            |
-| uts             | INTEGER      | Nilai UTS                              |
-| uas             | INTEGER      | Nilai UAS                              |
+| tugas           | DECIMAL      | Nilai tugas                            |
+| quiz            | DECIMAL      | Nilai Quiz                             |
+| uts             | DECIMAL      | Nilai UTS                              |
+| uas             | DECIMAL      | Nilai UAS                              |
 
 ---
 
@@ -204,20 +212,22 @@ Sistem ini mendukung 4 jenis pengguna:
 | Kolom       | Tipe Data    | Keterangan                             |
 |-------------|--------------|----------------------------------------|
 | id          | BIGINT (PK)  | Primary Key                            |
+| dibuat_oleh | BIGINT (FK)  | Relasi ke `users.id` (admin/guru)      |
+| kelas_id    | BIGINT (FK)  | Relasi ke `kelas.id` (nullable)        |
 | judul       | VARCHAR      | Judul pengumuman                       |
 | isi         | TEXT         | Isi pengumuman                         |
-| dibuat_oleh | BIGINT (FK)  | Relasi ke `users.id` (admin/guru)     |
 | tanggal     | DATE         | Tanggal dibuat                         |
+| lampiran    | VARCHAR      | (nullable)                             |
 
 ---
 
 ### 📄 Tabel: `pengumuman_user`
-| Kolom       | Tipe Data    | Keterangan                             |
-|-------------|--------------|----------------------------------------|
-| id          | BIGINT (PK)  | Primary Key                            |
-| pengumuman_id| BIGINT (FK) | Relasi ke `pengumuman.id`              |
-| user_id     | BIGINT (FK)  | Relasi ke `users.id`                   |
-| read_at     | DATE         | Tanggal dibaca 
+| Kolom         | Tipe Data    | Keterangan                             |
+|---------------|--------------|----------------------------------------|
+| id            | BIGINT (PK)  | Primary Key                            |
+| pengumuman_id | BIGINT (FK)  | Relasi ke `pengumuman.id`              |
+| user_id       | BIGINT (FK)  | Relasi ke `users.id`                   |
+| dibaca        | BOOLEAN      | status dibaca                          |
 
 ---
 
