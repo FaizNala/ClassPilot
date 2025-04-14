@@ -1,97 +1,84 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <form class="form-inline mr-auto">
-        <ul class="navbar-nav mr-3">
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
-        </ul>
-        <div class="search-element">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
-            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-            <div class="search-backdrop"></div>
-            <div class="search-result">
-                <div class="search-header">
-                    Histories
-                </div>
-                <div class="search-item">
-                    <a href="#">How to hack NASA using CSS</a>
-                    <a href="#" class="search-close"><i class="fas fa-times"></i></a>
-                </div>
-                <div class="search-item">
-                    <a href="#">Kodinger.com</a>
-                    <a href="#" class="search-close"><i class="fas fa-times"></i></a>
-                </div>
-                <div class="search-header">
-                    Result
-                </div>
-                <div class="search-item">
-                    <a href="#">
-                        <img class="mr-3 rounded" width="30" src="{{ asset('stisla/dist/assets/img/products/product-3-50.png') }}" alt="product">
-                        oPhone S9 Limited Edition
-                    </a>
-                </div>
-                <div class="search-header">
-                    Projects
-                </div>
-                <div class="search-item">
-                    <a href="#">
-                        <div class="search-icon bg-danger text-white mr-3">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        Stisla Admin Template
-                    </a>
-                </div>
-            </div>
-        </div>
-    </form>
-    <ul class="navbar-nav navbar-right d-flex align-items-center">
-        <!-- Notifikasi -->
-        <li class="dropdown dropdown-list-toggle">
-            <a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep">
-                <i class="far fa-bell"></i>
-            </a>
-            <div class="dropdown-menu dropdown-list dropdown-menu-right">
-                <div class="dropdown-header">Notifications
-                    <div class="float-right">
-                        <a href="#">Mark All As Read</a>
-                    </div>
-                </div>
-                <div class="dropdown-list-content dropdown-list-icons">
-                    <a href="#" class="dropdown-item dropdown-item-unread">
-                        <div class="dropdown-item-icon bg-primary text-white">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                            Template update is available now!
-                            <div class="time text-primary">2 Min Ago</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="dropdown-footer text-center">
-                    <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-                </div>
-            </div>
-        </li>
+{{-- resources/views/layouts/partials/header.blade.php --}}
+<nav
+  class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+  id="layout-navbar"
+>
+  <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+    <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+      <i class="bx bx-menu bx-sm"></i>
+    </a>
+  </div>
 
-        <!-- User -->
-        <li class="dropdown">
-            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user d-flex align-items-center">
-                <img alt="image" src="{{ asset('stisla/dist/assets/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1" style="width: 32px; height: 32px;">
-                <div class="d-sm-none d-lg-inline-block" style="color: #868e96;">{{ Auth::user()->name }}</div>
+  <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+    <!-- Search -->
+    <div class="navbar-nav align-items-center">
+      <div class="nav-item d-flex align-items-center">
+        <i class="bx bx-search fs-4 lh-0"></i>
+        <input
+          type="text"
+          class="form-control border-0 shadow-none"
+          placeholder="Search..."
+          aria-label="Search..."
+        />
+      </div>
+    </div>
+    <!-- /Search -->
+
+    <ul class="navbar-nav flex-row align-items-center ms-auto">
+      <!-- User -->
+      <li class="nav-item navbar-dropdown dropdown-user dropdown">
+        <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+          <div class="avatar avatar-online">
+            <img src="{{ asset('sneat/assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />
+          </div>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" href="#">
+              <div class="d-flex">
+                <div class="flex-shrink-0 me-3">
+                  <div class="avatar avatar-online">
+                    <img src="{{ asset('sneat/assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />
+                  </div>
+                </div>
+                <div class="flex-grow-1">
+                  <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
+                  <small class="text-muted">User</small>
+                </div>
+              </div>
             </a>
-            <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-title">Logged in 5 min ago</div>
-                <a href="{{ route('profile.edit') }}" class="dropdown-item has-icon">
-                    <i class="far fa-user"></i> Profile
-                </a>
-                <div class="dropdown-divider"></div>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger"
-                        onclick="event.preventDefault(); this.closest('form').submit();">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                </form>
-            </div>
-        </li>
+          </li>
+          <li>
+            <div class="dropdown-divider"></div>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{{ route('profile.edit') }}">
+              <i class="bx bx-user me-2"></i>
+              <span class="align-middle">My Profile</span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">
+              <i class="bx bx-cog me-2"></i>
+              <span class="align-middle">Settings</span>
+            </a>
+          </li>
+          <li>
+            <div class="dropdown-divider"></div>
+          </li>
+          <li>
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              <a class="dropdown-item" href="{{ route('logout') }}"
+                 onclick="event.preventDefault(); this.closest('form').submit();">
+                <i class="bx bx-power-off me-2"></i>
+                <span class="align-middle">Log Out</span>
+              </a>
+            </form>
+          </li>
+        </ul>
+      </li>
+      <!--/ User -->
     </ul>
+  </div>
 </nav>

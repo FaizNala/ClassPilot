@@ -10,9 +10,6 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    // Additional nested dashboard routes
-    Route::get('/dashboard/general', [DashboardController::class, 'general'])->name('dashboard.general');
-    Route::get('/dashboard/ecommerce', [DashboardController::class, 'ecommerce'])->name('dashboard.ecommerce');
 });
 
 Route::middleware('auth')->group(function () {

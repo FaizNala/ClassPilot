@@ -8,22 +8,10 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $type = $request->query('type', 'general');
+        // Fetch the authenticated user
+        $user = $request->user();
 
-        if ($type === 'ecommerce') {
-            return $this->ecommerce();
-        }
-
-        return $this->general();
-    }
-
-    public function general()
-    {
-        return view('dashboard.general');
-    }
-
-    public function ecommerce()
-    {
-        return view('dashboard.ecommerce');
+        // Return the dashboard view with the user data
+        return view('dashboard', ['user' => $user]);
     }
 }
