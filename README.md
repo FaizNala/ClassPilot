@@ -117,7 +117,7 @@ Sistem ini mendukung 4 jenis pengguna:
 
 ---
 
-### 📄 Tabel: `tahun_pelajaran`
+### 📄 Tabel: `tahun_ajaran`
 | Kolom     | Tipe Data    | Keterangan                         |
 |-----------|--------------|------------------------------------|
 | id        | BIGINT (PK)  | Primary Key                        |
